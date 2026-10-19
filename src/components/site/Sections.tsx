@@ -186,7 +186,7 @@ export function Portfolio() {
           <h2 className="font-sans text-5xl font-bold leading-[0.9] tracking-tighter md:text-8xl">PORTFOLIO.</h2>
         </Reveal>
         <Reveal delay={0.1} className="flex items-center gap-3">
-          <span className="eyebrow text-[0.65rem] text-muted-foreground mr-2">
+          <span className="eyebrow text-[0.65rem] text-muted-foreground mr-2 md:hidden">
             Swipe left karke aur looks dekho
           </span>
           <button
@@ -425,7 +425,7 @@ export function Services() {
           <h2 className="font-sans text-5xl font-bold leading-[0.9] tracking-tighter md:text-8xl">SERVICES.</h2>
         </Reveal>
         <Reveal delay={0.1} className="flex items-center gap-3">
-          <span className="eyebrow text-[0.65rem] text-muted-foreground mr-2">
+          <span className="eyebrow text-[0.65rem] text-muted-foreground mr-2 md:hidden">
             Swipe left karke aur services dekhein
           </span>
           <button

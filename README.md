@@ -248,16 +248,6 @@ Keywords: Monochrome luxury, black and white, modern glassmorphism, editorial la
 
 Prioritize visual impact, exceptional typography, elegant motion, and a polished user experience. Make it look custom-designed, not like a generic salon template.
 
-This project was built with [Lovable](https://lovable.dev).
-
-## Build with Lovable
-
-Continue developing this project in the [Lovable editor](https://lovable.dev/projects/f23d4e50-d913-4d5a-a7bd-1e968bac98b5).
-
-- **Ship faster**: describe what you want to build and Lovable handles the code.
-- **Stay in sync**: every change made in Lovable is committed straight to this repository.
-- **Full ownership**: this code is yours. Push to `main` on GitHub and your changes sync back into Lovable, ready for your next prompt.
-
 ## Development
 
 Prefer working locally? You need Node.js and npm — [install with nvm](https://github.com/nvm-sh/nvm#installing-and-updating).
