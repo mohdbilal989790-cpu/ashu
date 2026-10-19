@@ -403,7 +403,7 @@ export function Footer() {
   return (
     <footer className="border-t border-border px-6 py-10">
       <div className="mx-auto flex max-w-7xl flex-col items-center justify-between gap-4 md:flex-row">
-        <a href="#home" className="font-serif text-2xl italic">Atelier.</a>
+        <a href="/#home" className="font-serif text-2xl italic">Atelier.</a>
         <p className="eyebrow text-[0.6rem] text-muted-foreground">© {new Date().getFullYear()} — The Art of Hair</p>
       </div>
     </footer>

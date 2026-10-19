@@ -32,12 +32,12 @@ export function Nav() {
         aria-label="Main"
         className={`mx-auto flex max-w-6xl items-center justify-between rounded-full px-5 py-3 transition-all duration-500 ${scrolled ? "glass" : "border border-transparent"}`}
       >
-        <a href="#home" className="font-serif text-xl italic tracking-tight">Atelier<span className="text-silver">.</span></a>
+        <a href="/#home" className="font-serif text-xl italic tracking-tight">Atelier<span className="text-silver">.</span></a>
         <ul className="hidden items-center gap-1 md:flex">
           {NAV.map((n) => (
             <li key={n.id}>
               <a
-                href={`#${n.id}`}
+                href={`/#${n.id}`}
                 aria-current={active === n.id ? "true" : undefined}
                 className={`relative rounded-full px-4 py-2 eyebrow transition-colors ${active === n.id ? "text-foreground" : "text-muted-foreground hover:text-foreground"}`}
               >
@@ -49,7 +49,7 @@ export function Nav() {
             </li>
           ))}
         </ul>
-        <a href="#contact" className="hidden rounded-full bg-primary px-5 py-2 eyebrow text-primary-foreground transition-transform hover:scale-105 md:inline-block">Book</a>
+        <a href="/#contact" className="hidden rounded-full bg-primary px-5 py-2 eyebrow text-primary-foreground transition-transform hover:scale-105 md:inline-block">Book</a>
         <button
           className="flex h-10 w-10 flex-col items-center justify-center gap-1.5 md:hidden"
           aria-label={open ? "Close menu" : "Open menu"}
@@ -71,13 +71,13 @@ export function Nav() {
             <ul className="space-y-1">
               {NAV.map((n, i) => (
                 <motion.li key={n.id} initial={{ opacity: 0, x: -10 }} animate={{ opacity: 1, x: 0 }} transition={{ delay: i * 0.05 }}>
-                  <a href={`#${n.id}`} onClick={() => setOpen(false)} className={`block py-2 font-serif text-3xl ${active === n.id ? "text-foreground" : "text-muted-foreground"}`}>
+                  <a href={`/#${n.id}`} onClick={() => setOpen(false)} className={`block py-2 font-serif text-3xl ${active === n.id ? "text-foreground" : "text-muted-foreground"}`}>
                     {n.label}
                   </a>
                 </motion.li>
               ))}
             </ul>
-            <a href="#contact" onClick={() => setOpen(false)} className="mt-6 block rounded-full bg-primary py-3 text-center eyebrow text-primary-foreground">Book an Appointment</a>
+            <a href="/#contact" onClick={() => setOpen(false)} className="mt-6 block rounded-full bg-primary py-3 text-center eyebrow text-primary-foreground">Book an Appointment</a>
           </motion.div>
         )}
       </AnimatePresence>
