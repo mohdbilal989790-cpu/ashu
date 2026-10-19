@@ -1,6 +1,9 @@
-import { useEffect, useState, type FormEvent } from "react";
+import { useEffect, useState } from "react";
+import { Link } from "@tanstack/react-router";
 import { AnimatePresence, motion, useScroll, useTransform, useReducedMotion } from "framer-motion";
 import { Magnetic, Reveal, TiltCard } from "./motion";
+import { BookingForm } from "./BookingForm";
+import { WORKS } from "@/data/portfolio";
 import hero from "@/assets/hero.jpg";
 import stylist from "@/assets/stylist.jpg";
 import pCut from "@/assets/p-cut.jpg";
@@ -93,14 +96,6 @@ export function Hero() {
 
 /* ───────── PORTFOLIO ───────── */
 const CATS = ["All", "Haircuts & Styling", "Hair Colour & Highlights", "Bridal Hairstyles", "Hair Transformations", "Editorial & Creative Looks"];
-const WORKS = [
-  { img: pCut, title: "Graphic Bob", cat: "Haircuts & Styling", span: "md:row-span-2", w: 768, h: 1024 },
-  { img: pColour, title: "Tonal Balayage", cat: "Hair Colour & Highlights", span: "md:row-span-2", w: 768, h: 1024 },
-  { img: pTransform, title: "Textured Crop", cat: "Hair Transformations", span: "", w: 1024, h: 768 },
-  { img: pBridal, title: "Braided Chignon", cat: "Bridal Hairstyles", span: "md:row-span-2", w: 768, h: 1024 },
-  { img: pEditorial, title: "Sculpted Volume", cat: "Editorial & Creative Looks", span: "", w: 1024, h: 1024 },
-  { img: pBlowout, title: "Glass Blowout", cat: "Haircuts & Styling", span: "md:row-span-2", w: 768, h: 1024 },
-];
 
 export function Portfolio() {
   const [cat, setCat] = useState("All");
@@ -134,14 +129,17 @@ export function Portfolio() {
               transition={{ duration: 0.7, delay: (i % 3) * 0.1 }}
               className={`row-span-2 ${w.span}`}
             >
+              <Link to="/portfolio/$slug" params={{ slug: w.slug }} aria-label={`View ${w.title} case study`} className="block h-full">
               <TiltCard className="h-full overflow-hidden rounded-sm">
                 <img src={w.img} alt={`${w.title} — ${w.cat}`} loading="lazy" width={w.w} height={w.h} className="h-full w-full object-cover grayscale-[40%] brightness-90 transition-all duration-700 group-hover:scale-110 group-hover:grayscale-0 group-hover:brightness-100" />
                 <div className="absolute inset-0 bg-gradient-to-t from-ink/80 via-transparent to-transparent" />
                 <div className="absolute inset-x-0 bottom-0 translate-y-2 p-6 transition-transform duration-500 group-hover:translate-y-0">
                   <p className="eyebrow text-[0.6rem] text-silver">{w.cat}</p>
                   <h3 className="mt-2 font-serif text-2xl italic">{w.title}</h3>
+                  <p className="mt-3 eyebrow text-[0.6rem] opacity-0 transition-opacity duration-500 group-hover:opacity-100">View the story →</p>
                 </div>
               </TiltCard>
+              </Link>
             </motion.div>
           ))}
         </AnimatePresence>
@@ -310,28 +308,7 @@ export function Instagram() {
 }
 
 /* ───────── CONTACT ───────── */
-function Field({ label, type = "text", name, textarea }: { label: string; type?: string; name: string; textarea?: boolean }) {
-  const cls = "peer w-full border-b border-input bg-transparent pb-3 pt-6 text-lg outline-none transition-colors placeholder-transparent focus:border-foreground";
-  return (
-    <label className="relative block">
-      {textarea ? <textarea name={name} rows={3} placeholder={label} className={cls} required /> : <input name={name} type={type} placeholder={label} className={cls} required />}
-      <span className="pointer-events-none absolute left-0 top-1 eyebrow text-[0.6rem] text-muted-foreground transition-all peer-placeholder-shown:top-7 peer-placeholder-shown:text-sm peer-placeholder-shown:tracking-normal peer-placeholder-shown:normal-case peer-focus:top-1 peer-focus:text-[0.6rem] peer-focus:uppercase peer-focus:tracking-[0.35em] peer-focus:text-foreground">
-        {label}
-      </span>
-      <span className="absolute bottom-0 left-0 h-px w-0 bg-foreground transition-all duration-500 peer-focus:w-full" />
-    </label>
-  );
-}
-
 export function Contact() {
-  const [sent, setSent] = useState(false);
-  const onSubmit = (e: FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    const f = new FormData(e.currentTarget);
-    const text = `Hi! I'd like to book an appointment.\nName: ${f.get("name")}\nPhone: ${f.get("phone")}\nService: ${f.get("service")}\n${f.get("message")}`;
-    window.open(`https://wa.me/${CONTACT.whatsapp}?text=${encodeURIComponent(text)}`, "_blank");
-    setSent(true);
-  };
   const links = [
     { k: "WhatsApp", v: "Message me", href: `https://wa.me/${CONTACT.whatsapp}` },
     { k: "Instagram", v: `@${CONTACT.instagram}`, href: `https://instagram.com/${CONTACT.instagram}` },
@@ -349,7 +326,7 @@ export function Contact() {
         </Reveal>
         <Reveal delay={0.1} className="mt-10">
           <Magnetic>
-            <a href={`https://wa.me/${CONTACT.whatsapp}`} target="_blank" rel="noreferrer" className="inline-flex items-center gap-3 rounded-full bg-primary px-8 py-5 eyebrow text-primary-foreground transition-transform hover:scale-[1.03]">
+            <a href="#book" className="inline-flex items-center gap-3 rounded-full bg-primary px-8 py-5 eyebrow text-primary-foreground transition-transform hover:scale-[1.03]">
               Book Your Appointment <Arrow />
             </a>
           </Magnetic>
@@ -375,23 +352,7 @@ export function Contact() {
             </div>
           </Reveal>
           <Reveal delay={0.1}>
-            {sent ? (
-              <div className="glass rounded-sm p-10 text-center">
-                <p className="font-serif text-3xl italic">Thank you.</p>
-                <p className="mt-3 text-muted-foreground">Your message is ready in WhatsApp — just hit send.</p>
-                <button onClick={() => setSent(false)} className="mt-6 eyebrow underline underline-offset-8">Send another</button>
-              </div>
-            ) : (
-              <form onSubmit={onSubmit} className="space-y-6">
-                <Field label="Your name" name="name" />
-                <Field label="Phone number" name="phone" type="tel" />
-                <Field label="Service of interest" name="service" />
-                <Field label="Tell me about your hair goals" name="message" textarea />
-                <button type="submit" className="group inline-flex items-center gap-3 rounded-full border border-foreground px-8 py-4 eyebrow transition-colors hover:bg-primary hover:text-primary-foreground">
-                  Send Request <Arrow className="transition-transform group-hover:translate-x-1" />
-                </button>
-              </form>
-            )}
+            <BookingForm />
           </Reveal>
         </div>
       </div>
