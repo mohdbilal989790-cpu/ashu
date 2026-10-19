@@ -124,3 +124,10 @@
 @keyframes slow-zoom { from { transform: scale(1.15) } to { transform: scale(1) } }
 @utility animate-scroll-dot { animation: scroll-dot 1.8s ease-in-out infinite; }
 @utility animate-slow-zoom { animation: slow-zoom 9s cubic-bezier(.2,.6,.2,1) forwards; }
+@utility no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+  &::-webkit-scrollbar {
+    display: none;
+  }
+}

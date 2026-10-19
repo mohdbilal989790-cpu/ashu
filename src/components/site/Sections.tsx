@@ -208,7 +208,11 @@ export function Portfolio() {
         </Reveal>
       </div>
 
-      <div role="tablist" aria-label="Filter portfolio" className="-mx-6 mb-4 sm:mb-10 flex gap-2 overflow-x-auto px-6 pb-2">
+      <div
+        role="tablist"
+        aria-label="Filter portfolio"
+        className="-mx-6 mb-4 sm:mb-10 flex gap-2 overflow-x-auto px-6 pb-2 no-scrollbar md:flex-wrap md:overflow-visible [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
+      >
         {CATS.map((c) => (
           <button
             key={c}
