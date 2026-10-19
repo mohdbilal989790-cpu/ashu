@@ -185,8 +185,8 @@ export function Portfolio() {
           <p className="eyebrow mb-3 sm:mb-5 text-muted-foreground">01 — Selected Work & Looks</p>
           <h2 className="font-sans text-5xl font-bold leading-[0.9] tracking-tighter md:text-8xl">PORTFOLIO.</h2>
         </Reveal>
-        <Reveal delay={0.1} className="flex items-center gap-3">
-          <span className="eyebrow text-[0.65rem] text-muted-foreground mr-2 md:hidden">
+        <Reveal delay={0.1} className="flex items-center gap-3 md:hidden">
+          <span className="eyebrow text-[0.65rem] text-muted-foreground mr-2">
             Swipe left karke aur looks dekho
           </span>
           <button
@@ -230,65 +230,103 @@ export function Portfolio() {
         ))}
       </div>
 
-      <Carousel
-        setApi={setApi}
-        opts={{
-          align: "start",
-          loop: items.length > 1,
-        }}
-        className="w-full"
-      >
-        <CarouselContent className="-ml-4 sm:-ml-6">
-          {items.map((w) => (
-            <CarouselItem
-              key={w.slug}
-              className="pl-4 sm:pl-6 basis-[86%] sm:basis-[60%] md:basis-[48%] lg:basis-[36%]"
-            >
-              <Link
-                to="/portfolio/$slug"
-                params={{ slug: w.slug }}
-                aria-label={`View ${w.title} case study`}
-                className="block h-[420px] sm:h-[480px] w-full select-none"
-              >
-                <TiltCard className="h-full overflow-hidden rounded-2xl border border-white/10 group">
-                  <img
-                    src={w.img}
-                    alt={`${w.title} — ${w.cat}`}
-                    loading="lazy"
-                    draggable={false}
-                    className="h-full w-full object-cover grayscale-[30%] brightness-90 transition-all duration-700 group-hover:scale-110 group-hover:grayscale-0 group-hover:brightness-100 pointer-events-none"
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-t from-background/95 via-background/20 to-transparent" />
-                  <div className="absolute inset-x-0 bottom-0 p-6 sm:p-7 transition-transform duration-500">
-                    <p className="eyebrow text-[0.6rem] text-silver">{w.cat}</p>
-                    <h3 className="mt-2 font-serif text-2xl sm:text-3xl italic">{w.title}</h3>
-                    <p className="mt-3 inline-flex items-center gap-2 eyebrow text-[0.65rem] text-muted-foreground group-hover:text-foreground">
-                      Look dekho <Arrow className="transition-transform group-hover:translate-x-1" />
-                    </p>
-                  </div>
-                </TiltCard>
-              </Link>
-            </CarouselItem>
-          ))}
-        </CarouselContent>
-      </Carousel>
+      {/* Desktop Grid Layout: 2 rows of 3 images (6 total) on PC */}
+      <div className="hidden md:grid md:grid-cols-3 gap-4 lg:gap-5">
+        {items.map((w) => (
+          <Link
+            key={w.slug}
+            to="/portfolio/$slug"
+            params={{ slug: w.slug }}
+            aria-label={`View ${w.title} case study`}
+            className="block h-[340px] lg:h-[375px] w-full select-none"
+          >
+            <TiltCard className="h-full overflow-hidden rounded-2xl border border-white/25 hover:border-white/50 shadow-[0_8px_32px_0_rgba(0,0,0,0.5),inset_0_1px_2px_rgba(255,255,255,0.25)] backdrop-blur-md transition-all duration-500 group">
+              <img
+                src={w.img}
+                alt={`${w.title} — ${w.cat}`}
+                loading="lazy"
+                draggable={false}
+                className="h-full w-full object-cover grayscale-[25%] brightness-90 transition-all duration-700 group-hover:scale-108 group-hover:grayscale-0 group-hover:brightness-100 pointer-events-none"
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-background/95 via-background/25 to-transparent" />
+              {/* Light glassy highlight reflection */}
+              <div className="pointer-events-none absolute inset-0 rounded-2xl ring-1 ring-inset ring-white/15" />
+              <div className="absolute inset-x-0 bottom-0 p-4 sm:p-5 transition-transform duration-500">
+                <p className="eyebrow text-[0.58rem] text-silver">{w.cat}</p>
+                <h3 className="mt-1 font-serif text-lg sm:text-xl italic font-medium">{w.title}</h3>
+                <p className="mt-2 inline-flex items-center gap-1.5 eyebrow text-[0.62rem] text-muted-foreground group-hover:text-foreground">
+                  Look dekho <Arrow className="transition-transform group-hover:translate-x-1" />
+                </p>
+              </div>
+            </TiltCard>
+          </Link>
+        ))}
+      </div>
 
-      {/* Progress Dots Indicator */}
-      {items.length > 1 && (
-        <div className="mt-4 sm:mt-8 flex items-center justify-center gap-2">
-          {items.map((_, idx) => (
-            <button
-              key={idx}
-              type="button"
-              aria-label={`Go to look ${idx + 1}`}
-              onClick={() => api?.scrollTo(idx)}
-              className={`h-1.5 rounded-full transition-all duration-300 ${
-                current === idx ? "w-8 bg-foreground" : "w-2 bg-foreground/20 hover:bg-foreground/40"
-              }`}
-            />
-          ))}
-        </div>
-      )}
+      {/* Mobile Swipeable Carousel Layout */}
+      <div className="md:hidden">
+        <Carousel
+          setApi={setApi}
+          opts={{
+            align: "start",
+            loop: items.length > 1,
+          }}
+          className="w-full"
+        >
+          <CarouselContent className="-ml-4 sm:-ml-6">
+            {items.map((w) => (
+              <CarouselItem
+                key={w.slug}
+                className="pl-4 sm:pl-6 basis-[86%] sm:basis-[60%]"
+              >
+                <Link
+                  to="/portfolio/$slug"
+                  params={{ slug: w.slug }}
+                  aria-label={`View ${w.title} case study`}
+                  className="block h-[360px] sm:h-[410px] w-full select-none"
+                >
+                  <TiltCard className="h-full overflow-hidden rounded-2xl border border-white/25 hover:border-white/50 shadow-[0_8px_32px_0_rgba(0,0,0,0.5),inset_0_1px_2px_rgba(255,255,255,0.25)] backdrop-blur-md transition-all duration-500 group">
+                    <img
+                      src={w.img}
+                      alt={`${w.title} — ${w.cat}`}
+                      loading="lazy"
+                      draggable={false}
+                      className="h-full w-full object-cover grayscale-[25%] brightness-90 transition-all duration-700 group-hover:scale-108 group-hover:grayscale-0 group-hover:brightness-100 pointer-events-none"
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-background/95 via-background/25 to-transparent" />
+                    {/* Light glassy highlight reflection */}
+                    <div className="pointer-events-none absolute inset-0 rounded-2xl ring-1 ring-inset ring-white/15" />
+                    <div className="absolute inset-x-0 bottom-0 p-5 transition-transform duration-500">
+                      <p className="eyebrow text-[0.58rem] text-silver">{w.cat}</p>
+                      <h3 className="mt-1.5 font-serif text-xl sm:text-2xl italic">{w.title}</h3>
+                      <p className="mt-2.5 inline-flex items-center gap-2 eyebrow text-[0.65rem] text-muted-foreground group-hover:text-foreground">
+                        Look dekho <Arrow className="transition-transform group-hover:translate-x-1" />
+                      </p>
+                    </div>
+                  </TiltCard>
+                </Link>
+              </CarouselItem>
+            ))}
+          </CarouselContent>
+        </Carousel>
+
+        {/* Progress Dots Indicator */}
+        {items.length > 1 && (
+          <div className="mt-4 sm:mt-8 flex items-center justify-center gap-2">
+            {items.map((_, idx) => (
+              <button
+                key={idx}
+                type="button"
+                aria-label={`Go to look ${idx + 1}`}
+                onClick={() => api?.scrollTo(idx)}
+                className={`h-1.5 rounded-full transition-all duration-300 ${
+                  current === idx ? "w-8 bg-foreground" : "w-2 bg-foreground/20 hover:bg-foreground/40"
+                }`}
+              />
+            ))}
+          </div>
+        )}
+      </div>
     </section>
   );
 }
@@ -468,7 +506,7 @@ export function Services() {
               <TiltCard className="h-full">
                 <a
                   href="#contact"
-                  className="group glass flex h-full flex-col overflow-hidden rounded-2xl border border-white/10 transition-all duration-500 hover:border-silver/40 hover:bg-accent/60 select-none"
+                  className="group glass flex h-full flex-col overflow-hidden rounded-2xl border border-white/20 hover:border-white/45 shadow-[0_8px_32px_0_rgba(0,0,0,0.4),inset_0_1px_2px_rgba(255,255,255,0.18)] transition-all duration-500 hover:bg-accent/60 select-none"
                 >
                   <div className="relative aspect-[16/10] w-full overflow-hidden bg-ink/40">
                     <img
