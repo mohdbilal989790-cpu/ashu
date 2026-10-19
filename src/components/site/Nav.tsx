@@ -32,7 +32,7 @@ export function Nav() {
         aria-label="Main"
         className={`mx-auto flex max-w-6xl items-center justify-between rounded-full px-5 py-3 transition-all duration-500 ${scrolled ? "glass" : "border border-transparent"}`}
       >
-        <a href="/#home" className="font-serif text-xl italic tracking-tight">Atelier<span className="text-silver">.</span></a>
+        <a href="/#home" className="font-serif text-xl italic tracking-tight">Ashu Hairstylish<span className="text-silver">.</span></a>
         <ul className="hidden items-center gap-1 md:flex">
           {NAV.map((n) => (
             <li key={n.id}>

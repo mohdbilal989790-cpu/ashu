@@ -1,9 +1,9 @@
-import pCut from "@/assets/p-cut.jpg";
-import pBridal from "@/assets/p-bridal.jpg";
-import pColour from "@/assets/p-colour.jpg";
-import pEditorial from "@/assets/p-editorial.jpg";
-import pTransform from "@/assets/p-transform.jpg";
-import pBlowout from "@/assets/p-blowout.jpg";
+import pCut from "@/assets/p-cut.webp";
+import pBridal from "@/assets/p-bridal.webp";
+import pColour from "@/assets/p-colour.webp";
+import pEditorial from "@/assets/p-editorial.webp";
+import pTransform from "@/assets/p-transform.webp";
+import pBlowout from "@/assets/p-blowout.webp";
 
 export type Work = {
   slug: string;

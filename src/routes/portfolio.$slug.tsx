@@ -12,7 +12,7 @@ export const Route = createFileRoute("/portfolio/$slug")({
     return { work };
   },
   head: ({ loaderData }) => {
-    const title = loaderData ? `${loaderData.work.title} — The Art of Hair` : "Look not found — The Art of Hair";
+    const title = loaderData ? `${loaderData.work.title} — Ashu Hairstylish` : "Look not found — Ashu Hairstylish";
     const desc = loaderData?.work.summary ?? "This portfolio look could not be found.";
     return {
       meta: [
@@ -53,26 +53,26 @@ function WorkPage() {
           <img src={work.img} alt={`${work.title} — final result`} width={work.w} height={work.h} className="h-full max-h-[80vh] w-full object-cover" />
         </motion.div>
         <div className="flex flex-col justify-end">
-          <Link to="/" hash="portfolio" className="eyebrow mb-10 text-muted-foreground hover:text-foreground">← All work</Link>
+          <Link to="/" hash="portfolio" className="eyebrow mb-10 text-muted-foreground hover:text-foreground">← Sabhi Looks</Link>
           <p className="eyebrow mb-4 text-silver">{work.cat}</p>
           <h1 className="font-sans text-6xl font-bold leading-[0.9] tracking-tighter md:text-8xl">{work.title}</h1>
           <p className="mt-6 font-serif text-2xl italic text-paper/80">{work.summary}</p>
           <dl className="mt-10 grid grid-cols-2 border-t border-border">
-            <div className="py-5 pr-4"><dt className="eyebrow text-[0.6rem] text-muted-foreground">Time in chair</dt><dd className="mt-1">{work.duration}</dd></div>
-            <div className="border-l border-border py-5 pl-6"><dt className="eyebrow text-[0.6rem] text-muted-foreground">Key products</dt><dd className="mt-1">{work.products}</dd></div>
+            <div className="py-5 pr-4"><dt className="eyebrow text-[0.6rem] text-muted-foreground">Styling Time</dt><dd className="mt-1">{work.duration}</dd></div>
+            <div className="border-l border-border py-5 pl-6"><dt className="eyebrow text-[0.6rem] text-muted-foreground">Used Products</dt><dd className="mt-1">{work.products}</dd></div>
           </dl>
         </div>
       </section>
 
       <section className="section-light py-24 md:py-32">
         <div className="mx-auto grid max-w-7xl gap-12 px-6 md:grid-cols-[1fr_2fr]">
-          <Reveal><p className="eyebrow opacity-60">01 — The Brief</p><h2 className="mt-4 font-sans text-4xl font-bold tracking-tighter md:text-5xl">REQUESTED LOOK</h2></Reveal>
+          <Reveal><p className="eyebrow opacity-60">01 — Client Requirement</p><h2 className="mt-4 font-sans text-4xl font-bold tracking-tighter md:text-5xl">REQUESTED LOOK</h2></Reveal>
           <Reveal delay={0.1}><p className="font-serif text-2xl leading-snug md:text-3xl">“{work.requested}”</p></Reveal>
         </div>
       </section>
 
       <section className="mx-auto max-w-7xl px-6 py-24 md:py-32">
-        <Reveal><p className="eyebrow text-muted-foreground">02 — The Process</p><h2 className="mt-4 mb-14 font-sans text-4xl font-bold tracking-tighter md:text-6xl">STYLING PROCESS</h2></Reveal>
+        <Reveal><p className="eyebrow text-muted-foreground">02 — Styling Technique</p><h2 className="mt-4 mb-14 font-sans text-4xl font-bold tracking-tighter md:text-6xl">THE PROCESS</h2></Reveal>
         <ol className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
           {work.process.map((p, i) => (
             <Reveal key={p.step} delay={i * 0.08}>
@@ -89,11 +89,11 @@ function WorkPage() {
       <section className="border-t border-border py-24 md:py-32">
         <div className="mx-auto max-w-4xl px-6 text-center">
           <Reveal>
-            <p className="eyebrow text-muted-foreground">03 — Final Result</p>
+            <p className="eyebrow text-muted-foreground">03 — Final Transformation</p>
             <p className="mt-8 font-serif text-3xl italic leading-snug md:text-5xl">{work.result}</p>
             <div className="mt-12 flex flex-wrap justify-center gap-3">
-              <Link to="/" hash="contact" className="rounded-full bg-primary px-7 py-4 eyebrow text-primary-foreground transition-transform hover:scale-[1.03]">Book this look</Link>
-              <Link to="/portfolio/$slug" params={{ slug: next.slug }} className="glass rounded-full px-7 py-4 eyebrow">Next: {next.title} →</Link>
+              <Link to="/" hash="contact" className="rounded-full bg-primary px-7 py-4 eyebrow text-primary-foreground transition-transform hover:scale-[1.03]">Ye Look Book Karein</Link>
+              <Link to="/portfolio/$slug" params={{ slug: next.slug }} className="glass rounded-full px-7 py-4 eyebrow">Next Look: {next.title} →</Link>
             </div>
           </Reveal>
         </div>

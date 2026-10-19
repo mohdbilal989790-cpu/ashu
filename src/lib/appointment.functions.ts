@@ -6,8 +6,13 @@ export const requestAppointment = createServerFn({ method: "POST" })
   .handler(async ({ data }) => {
     const { supabaseAdmin } = await import("@/integrations/supabase/client.server");
     const { error } = await supabaseAdmin.from("appointment_requests").insert({
-      ...data,
+      name: data.name,
+      service: data.service,
       notes: data.notes || null,
+      email: data.email || "direct@ashuhairstylish.com",
+      phone: data.phone || "8630818833",
+      preferred_date: data.preferred_date || new Date().toISOString().slice(0, 10),
+      preferred_time: data.preferred_time || "Morning (10–12)",
     });
     if (error) {
       console.error("appointment insert failed", error);

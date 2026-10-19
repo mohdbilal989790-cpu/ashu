@@ -17,15 +17,17 @@ function todayISO() {
 
 export const appointmentSchema = z.object({
   name: z.string().trim().min(2, "Please enter your name").max(100),
-  email: z.string().trim().email("Enter a valid email").max(255),
-  phone: z.string().trim().regex(/^[+\d][\d\s-]{6,19}$/, "Enter a valid phone number"),
   service: z.enum(SERVICE_OPTIONS, { message: "Choose a service" }),
+  notes: z.string().trim().max(1000).optional().or(z.literal("")),
+  email: z.string().trim().email("Enter a valid email").max(255).optional().or(z.literal("")),
+  phone: z.string().trim().regex(/^[+\d][\d\s-]{6,19}$/, "Enter a valid phone number").optional().or(z.literal("")),
   preferred_date: z
     .string()
     .regex(/^\d{4}-\d{2}-\d{2}$/, "Choose a date")
-    .refine((d) => d >= todayISO(), "Date can't be in the past"),
-  preferred_time: z.enum(TIME_OPTIONS, { message: "Choose a time" }),
-  notes: z.string().trim().max(1000).optional().or(z.literal("")),
+    .refine((d) => d >= todayISO(), "Date can't be in the past")
+    .optional()
+    .or(z.literal("")),
+  preferred_time: z.enum(TIME_OPTIONS, { message: "Choose a time" }).optional().or(z.literal("")),
 });
 
 export type AppointmentInput = z.infer<typeof appointmentSchema>;
