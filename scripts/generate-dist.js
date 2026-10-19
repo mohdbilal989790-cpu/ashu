@@ -28,20 +28,33 @@ async function main() {
     `<script type="module" src="/assets/${jsFile}"></script>`
   );
 
-  // Map /src/assets/<name> to /assets/<hashed-name>
-  distAssets.forEach(file => {
-    if (file.endsWith('.webp')) {
-      const baseName = file.replace(/-[A-Za-z0-9_-]+\.webp$/, '.webp');
-      const regex = new RegExp(`/src/assets/${baseName.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')}`, 'g');
-      html = html.replace(regex, `/assets/${file}`);
-    }
+  // Build dynamic mapping from unhashed names to hashed names in dist/assets
+  const webpFiles = distAssets.filter(f => f.endsWith('.webp') && f.includes('-'));
+  webpFiles.forEach(hashedFile => {
+    // e.g. "hero-mobile-oK_ahEf5.webp" -> prefix "hero-mobile"
+    const prefix = hashedFile.slice(0, hashedFile.lastIndexOf('-'));
+    const unhashedName = prefix + '.webp';
+    const originalPath = `/src/assets/${unhashedName}`;
+    const targetPath = `/assets/${hashedFile}`;
+    html = html.split(originalPath).join(targetPath);
   });
 
-  // Also copy unhashed assets to dist/assets as safety fallback
+  // Also replace any remaining /src/assets/ with /assets/
+  html = html.split('/src/assets/').join('/assets/');
+
+  // Copy all webp files to dist/assets both hashed and unhashed
   const srcAssets = fs.readdirSync('src/assets');
   srcAssets.forEach(file => {
     if (file.endsWith('.webp')) {
       fs.copyFileSync(path.join('src/assets', file), path.join('dist/assets', file));
+    }
+  });
+
+  // Also create dist/src/assets as safety fallback for any dynamic client requests
+  fs.mkdirSync('dist/src/assets', { recursive: true });
+  srcAssets.forEach(file => {
+    if (file.endsWith('.webp')) {
+      fs.copyFileSync(path.join('src/assets', file), path.join('dist/src/assets', file));
     }
   });
 
@@ -50,7 +63,7 @@ async function main() {
 
   // Write dist/index.html
   fs.writeFileSync('dist/index.html', html, 'utf8');
-  console.log('Successfully generated dist/index.html (' + html.length + ' bytes)');
+  console.log('Successfully wrote dist/index.html (' + html.length + ' bytes)');
 
   // SPA fallback rule in _redirects
   fs.writeFileSync('dist/_redirects', '/*    /index.html   200\n', 'utf8');
