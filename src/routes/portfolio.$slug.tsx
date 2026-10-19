@@ -43,7 +43,7 @@ export const Route = createFileRoute("/portfolio/$slug")({
 function WorkPage() {
   const { work } = Route.useLoaderData();
   const idx = WORKS.findIndex((w) => w.slug === work.slug);
-  const next = WORKS[(idx + 1) % WORKS.length];
+  const next = WORKS[(idx + 1) % WORKS.length] ?? WORKS[0]!;
 
   return (
     <main>
