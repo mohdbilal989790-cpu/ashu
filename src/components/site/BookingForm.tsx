@@ -7,7 +7,7 @@ import { requestAppointment } from "@/lib/appointment.functions";
 const inputCls =
   "peer w-full border-b border-input bg-transparent pb-3 pt-6 text-lg outline-none transition-colors placeholder-transparent focus:border-foreground";
 
-function Wrap({ label, error, children, floating = true }: { label: string; error?: string; children: ReactNode; floating?: boolean }) {
+function Wrap({ label, error, children, floating = true }: { label: string; error?: string | undefined; children: ReactNode; floating?: boolean }) {
   return (
     <label className="relative block">
       {children}
@@ -26,9 +26,9 @@ function Wrap({ label, error, children, floating = true }: { label: string; erro
   );
 }
 
-export function BookingForm({ defaultService }: { defaultService?: string }) {
+export function BookingForm({ defaultService }: { defaultService?: string | undefined }) {
   const submit = useServerFn(requestAppointment);
-  const [errors, setErrors] = useState<Record<string, string>>({});
+  const [errors, setErrors] = useState<Partial<Record<"service" | "preferred_date" | "preferred_time" | "name" | "email" | "phone" | "notes", string>>>({});
   const [status, setStatus] = useState<"idle" | "sending" | "done" | "error">("idle");
   const [serverError, setServerError] = useState("");
   const today = new Date().toISOString().slice(0, 10);
@@ -41,7 +41,7 @@ export function BookingForm({ defaultService }: { defaultService?: string }) {
     if (!parsed.success) {
       const errs: Record<string, string> = {};
       parsed.error.issues.forEach((i) => { errs[String(i.path[0])] ??= i.message; });
-      setErrors(errs);
+      setErrors(errs as typeof errors);
       return;
     }
     setErrors({});
